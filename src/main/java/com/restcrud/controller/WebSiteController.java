@@ -21,14 +21,11 @@ public class WebSiteController {
 	@Autowired
 	private PersonService personService;
 
-
 	@GetMapping("/list")
 	public String listPersons(Model model) {
 
-		
 		List<Person> persons = personService.findAllPersons();
 
-	
 		model.addAttribute("persons", persons);
 
 		return "persons/list-persons";
@@ -37,7 +34,6 @@ public class WebSiteController {
 	@GetMapping("/showFormForAdd")
 	public String showFormForAdd(Model model) {
 
-	
 		Person person = new Person();
 
 		model.addAttribute("person", person);
@@ -48,7 +44,6 @@ public class WebSiteController {
 	@GetMapping("/showFormForUpdate")
 	public String showFormForUpdate(@RequestParam("personId") Long personId, Model theModel) {
 
-		// get the employee from the service
 		Person person = personService.findPersonById(personId);
 
 		theModel.addAttribute("person", person);
@@ -57,22 +52,18 @@ public class WebSiteController {
 	}
 
 	@PostMapping("/save")
-	public String saveEmployee(@ModelAttribute("person") Person person) {
+	public String savePerson(@ModelAttribute("person") Person person) {
 
-		// save the employee
 		personService.save(person);
 
-		// use a redirect to prevent duplicate submissions
 		return "redirect:/persons/list";
 	}
 
 	@GetMapping("/delete")
-	public String delete(@RequestParam("personId") Long personId) {
+	public String deletePerson(@RequestParam("personId") Long personId) {
 
-		// delete the employee
 		personService.deletePersonById(personId);
 
-		// redirect to /employees/list
 		return "redirect:/persons/list";
 
 	}
