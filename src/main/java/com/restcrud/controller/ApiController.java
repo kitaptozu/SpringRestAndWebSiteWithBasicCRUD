@@ -16,14 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.restcrud.exception.PersonNotFoundException;
 import com.restcrud.model.Person;
-import com.restcrud.service.ApiService;
+import com.restcrud.service.PersonService;
 
 @RestController
 @RequestMapping("/rest")
 public class ApiController {
 
 	@Autowired
-	private ApiService apiService;
+	private PersonService personService;
 
 	/*
 	 * Body example:
@@ -41,7 +41,7 @@ public class ApiController {
 	@RequestMapping(method = RequestMethod.POST, value = "/persons")
 	public ResponseEntity<Person> createPerson(@RequestBody Person person) throws Exception {
 
-		apiService.createPerson(person);
+		personService.createPerson(person);
 
 		return new ResponseEntity<Person>(person, HttpStatus.CREATED);
 
@@ -56,10 +56,10 @@ public class ApiController {
 		if (person.getId() == null) {
 			throw new Exception("id cannot be null");
 		}
-		if (!apiService.isPersonExist(person.getId())) {
+		if (!personService.isPersonExist(person.getId())) {
 			throw new PersonNotFoundException("Person not found");
 		}
-		apiService.updatePerson(person);
+		personService.updatePerson(person);
 
 		return new ResponseEntity<Person>(person, HttpStatus.OK);
 
@@ -71,7 +71,7 @@ public class ApiController {
 	@RequestMapping(method = RequestMethod.GET, value = "/persons")
 	@ResponseBody
 	public ResponseEntity<List<Person>> getAllPersons() {
-		List<Person> persons = apiService.findAllPersons();
+		List<Person> persons = personService.findAllPersons();
 
 		if (persons.size() == 0) {
 			throw new PersonNotFoundException("Person not found");
@@ -86,7 +86,7 @@ public class ApiController {
 	@RequestMapping(method = RequestMethod.GET, value = "/persons/name")
 	@ResponseBody
 	public ResponseEntity<List<Person>> getPersonsByName(@RequestParam("person_name") String name) {
-		List<Person> persons = apiService.findPersonsByFirstName(name);
+		List<Person> persons = personService.findPersonsByFirstName(name);
 
 		if (persons.size() == 0) {
 			throw new PersonNotFoundException("Person not found");
@@ -101,7 +101,7 @@ public class ApiController {
 	@ResponseBody
 	public ResponseEntity<Person> getPersonById(@PathVariable("id") Long id) {
 
-		Person person = apiService.findPersonById(id);
+		Person person = personService.findPersonById(id);
 
 		if (person == null) {
 			throw new PersonNotFoundException("Person not found");
@@ -116,11 +116,11 @@ public class ApiController {
 	@RequestMapping(method = RequestMethod.DELETE, value = "/persons/{id}")
 	public ResponseEntity<?> deletePerson(@PathVariable("id") Long id) {
 
-		if (!apiService.isPersonExist(id)) {
+		if (!personService.isPersonExist(id)) {
 			throw new PersonNotFoundException("Person not found");
 		}
 
-		apiService.deletePersonById(id);
+		personService.deletePersonById(id);
 		return ResponseEntity.ok().build();
 
 	}

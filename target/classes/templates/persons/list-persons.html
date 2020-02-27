@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+	integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	crossorigin="anonymous">
+
+<title>Person Directory</title>
+</head>
+
+<body>
+
+	<div class="container">
+
+		<h3>Person Directory</h3>
+		<hr>
+
+		
+		<a th:href="@{/persons/showFormForAdd}"
+			class="btn btn-primary btn-sm mb-3"> Add Person </a>
+
+
+		<table class="table table-bordered table-striped">
+			<thead class="thead-dark">
+				<tr>
+					<td>ID</td>
+					<td>FIRSTNAME</td>
+					<td>LASTNAME</td>
+					<td>ADDRESS</td>
+					<td>CITY</td>
+					<td>AGE</td>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="tempPerson : ${persons}">
+					<td th:text=" ${tempPerson.id}"/>
+					<td th:text="${tempPerson.firstName}" />
+					<td th:text="${tempPerson.lastName}" />
+					<td th:text="${tempPerson.address}" />
+					<td th:text="${tempPerson.city}" />
+					<td th:text="${tempPerson.age}" />
+
+					<td>
+						
+						<a
+						th:href="@{/persons/showFormForUpdate(personId=${tempPerson.id})}"
+						class="btn btn-info btn-sm"> Update </a>
+						
+						 
+						<a th:href="@{/persons/delete(personId=${tempPerson.id})}"
+						class="btn btn-danger btn-sm"
+						onclick="if (!(confirm('Are you sure you want to delete this person?'))) return false">
+							Delete </a>
+
+					</td>
+
+
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+
+</body>
+</html>
+
+
+

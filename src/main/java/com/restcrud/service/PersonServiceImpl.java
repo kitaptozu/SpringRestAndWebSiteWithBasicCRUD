@@ -10,7 +10,7 @@ import com.restcrud.model.Person;
 import com.restcrud.repository.PersonRepository;
 
 @Service
-public class ApiServiceImpl implements ApiService {
+public class PersonServiceImpl implements PersonService {
 
 	@Autowired
 	PersonRepository personRepository;
@@ -56,5 +56,13 @@ public class ApiServiceImpl implements ApiService {
 	public void deletePersonById(Long id) {
 		personRepository.deleteById(id);
 	}
+
+	@Override
+	public void save(Person person) {
+		personRepository.save(person);
+		
+	}
+
+
 
 }

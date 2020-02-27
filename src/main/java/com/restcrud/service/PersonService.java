@@ -5,7 +5,7 @@ import java.util.List;
 import com.restcrud.exception.PersonNotFoundException;
 import com.restcrud.model.Person;
 
-public interface ApiService {
+public interface PersonService {
 
 	List<Person> findAllPersons() throws PersonNotFoundException;
 
@@ -21,4 +21,5 @@ public interface ApiService {
 
 	void deletePersonById(Long id);
 
+	void save(Person person);
 }
